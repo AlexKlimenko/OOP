@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>HW_1_JS</title>
+	</head>
+	<body>
+		
+		<script>
+			console.log("ООП. Задачи");
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+			console.log("1");
+
+			function Planet(name) {
+				this.name = name;
+				this.getName = () => {return 'Planet name is ' + this.name};
+			}
+
+			function PlanetWithSatellite(name, satelliteName) {
+				Planet.call(this, name);
+				var planetGetName = this.getName;
+				this.getName = () => {
+					var newStr = planetGetName.call(this);
+					return newStr + '. The satellite is ' + satelliteName;
+				}
+			}
+
+			var earth = new PlanetWithSatellite('earth', 'moon');
+			console.log(earth.getName());
+
+/////////////////////////////////////////////////////////////////////////////////////
+			console.log("2");
+
+			function Building() {
+				this.name = name;
+				this.floorsNumber;
+
+				this.setFloorsNumber = (num) => {this.floorsNumber = num};
+				this.getFloorsNumber = () => this.floorsNumber;
+			}
+
+			function House() {
+				Building.call(this);
+				var floorsNumber = this.getFloorsNumber;
+				this.apartmentsNumber;
+
+				this.setApartmentsNumber = (num) => {this.apartmentsNumber = num};
+				this.getFloorsNumber = function() {
+					var floorsNum = floorsNumber.call(this),
+						apartmentsNum = floorsNum * this.apartmentsNumber,
+						res = {
+							floors: floorsNum,
+							apartmenrs: apartmentsNum
+						};
+
+					return res;
+				}
+			}
+
+			function Mall() {
+				Building.call(this);
+				var floorsNumber = this.getFloorsNumber;
+				this.shopsNumber;
+
+				this.setShopsNumber = (num) => {this.shopsNumber = num};
+				this.getFloorsNumber = function() {
+					var floorsNum = floorsNumber.call(this),
+						shopsNum = floorsNum * this.shopsNumber,
+						res = {
+							floors: floorsNum,
+							shops: shopsNum
+						};
+
+					return res;
+				}
+			}
+
+
+			var build_1 = new House(),
+				build_2 = new Mall();
+
+			build_1.setFloorsNumber(9);
+			build_2.setFloorsNumber(4);
+			build_1.setApartmentsNumber(4);
+			build_2.setShopsNumber(50);
+
+			console.log(build_1.getFloorsNumber(),
+						build_2.getFloorsNumber());
+
+
+
+			
+///////////////////////////////////////////////////////////////////////////////////////////			
+			console.log("3");
+
+			
+			function StringClass(string) {
+				this.string = string;
+
+				this.setString = () => this.string;
+
+				this.getString = (value) => {
+					this.string = value;
+				}
+
+				this.getStringLength = () => this.string.length;
+
+				this.toString = () => this.string;
+
+				this.valueOf = () => this.string.length;
+			}
+
+
+			let str = new StringClass('test');
+			console.log(str.setString());
+			console.log(+str);
+			console.log(str.toString());
+			console.log(str.getStringLength());
+		
+</script>
+</body>
