@@ -96,29 +96,52 @@
 ///////////////////////////////////////////////////////////////////////////////////////////			
 			console.log("3");
 
+			function Furniture(val) {
+				this.name = val.name;
+				this.price = val.price;
+			}
 			
-			function StringClass(string) {
-				this.string = string;
-
-				this.setString = () => this.string;
-
-				this.getString = (value) => {
-					this.string = value;
+			Furniture.prototype.info = function() {
+				return {name: this.name, 
+						price: this.price};
 				}
 
-				this.getStringLength = () => this.string.length;
-
-				this.toString = () => this.string;
-
-				this.valueOf = () => this.string.length;
+			function OfficeFurniture(val) {
+				Furniture.call(this, val);
+				this.type = val.type;
+			}
+			OfficeFurniture.prototype = Object.create(Furniture.prototype);
+			OfficeFurniture.prototype.info = function() {
+				let furnRes = Furniture.prototype.info.call(this);
+				furnRes.type = this.type;
+				return furnRes;
 			}
 
+			function HomeFurniture(val) {
+				Furniture.call(this, val);
+				this.style = val.style;
+			}
+			HomeFurniture.prototype = Object.create(Furniture.prototype);
+			HomeFurniture.prototype.info = function() {
+				let furnRes = Furniture.prototype.info.call(this);
+				furnRes.style = this.style;
+				return furnRes;
+			}
 
-			let str = new StringClass('test');
-			console.log(str.setString());
-			console.log(+str);
-			console.log(str.toString());
-			console.log(str.getStringLength());
+			let officeFurn = new OfficeFurniture({
+				name: 'table',
+				price: 150,
+				type: 'computer'
+			});
+
+			let homeFurn = new HomeFurniture({
+				name: 'table',
+				price: 120,
+				style: 'classic'
+			});
+
+			console.log(officeFurn.info());
+			console.log(homeFurn.info());
 		
 </script>
 </body>
