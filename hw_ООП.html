@@ -87,8 +87,8 @@
 			build_1.setApartmentsNumber(4);
 			build_2.setShopsNumber(50);
 
-			console.log(build_1.getFloorsNumber(),
-						build_2.getFloorsNumber());
+			console.log(build_1.getFloorsNumber());
+			console.log(build_2.getFloorsNumber());
 
 
 
@@ -102,8 +102,9 @@
 			}
 			
 			Furniture.prototype.info = function() {
-				return {name: this.name, 
-						price: this.price};
+				return {
+					name: this.name, 
+					price: this.price};
 				}
 
 			function OfficeFurniture(val) {
@@ -142,6 +143,66 @@
 
 			console.log(officeFurn.info());
 			console.log(homeFurn.info());
+
+
+///////////////////////////////////////////////////////////////////////////////////////////			
+			console.log("4");
+
+			function User(val) {
+				this.name = val.name;
+				this.regDate = val.regDate;
+			}
+			User.prototype.info = function() {
+				return {
+					name: this.name,
+					regDate: this.regDate
+				};
+			}
+
+			function Admin(val) {
+				User.call(this, val);
+				this._superAdmin = val.superAdmin;
+			}
+			Admin.prototype = Object.create(User.prototype);
+			Admin.prototype.info = function() {
+				var getInfo = User.prototype.info.call(this);
+				getInfo.superAdmin = this._superAdmin;
+				return getInfo;
+			}
+
+			function Guest() {
+				User.call(this, val);
+				var self = this;
+				var	getValidDate = function() {
+						var arrDate = self.regDate.split(''),
+							date = +arrDate[0] + 6;
+							arrDate = date;
+							resDate = arrDate.join('.');
+						return resDate;
+					}
+				this.validDate = getValidDate();
+			}
+			Guest.prototype = Object.create(User.prototype);
+			Guest.prototype.info = function() {
+				var getInfo = User.prototype.info.call(this);
+				getInfo.validDate = this.validDate;
+				return getInfo;
+			}
+
+			let admin = new Admin({
+					name: 'Alex',
+					regDate: '20.07.2017',
+					superAdmin: true
+			});
+			let	guest = new Guest({
+					name: 'Anna',
+					resDate: '22.07.2017'
+			});
+
+
+			console.log(admin.info());
+			console.log(guest.info());
+
 		
 </script>
 </body>
